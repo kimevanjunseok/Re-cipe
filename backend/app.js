@@ -4,6 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+// mongoose module 가져오기
+var mongoose = require('mongoose')
+
+// router connect
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -37,5 +41,21 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// db connect
+mongoose.connect('mongodb://localhost:27017/testDB', { useNewUrlParser: true });
+
+var db = mongoose.connection;
+
+// connection fail
+db.on('error', function(){
+    console.log('Connection Failed!');
+});
+
+// connection success
+db.once('open', function() {
+    console.log('Connected!');
+});
+
 
 module.exports = app;
