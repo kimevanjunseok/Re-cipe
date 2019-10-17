@@ -15,9 +15,10 @@ router.get("/", function(req, res, next) {
   });
 });
 
-router.post("/create", function(req, res, next) {
-  var newUser = new User({ name: "Hong Gil Dong", age: "22" });
-
+router.post('/create', function(req, res, next) {
+  console.log(req.body)
+  var newUser = new User(req.body)
+  console.log(newUser)
   User.create(newUser)
     .then(result => {
       res.send(result);
@@ -25,6 +26,7 @@ router.post("/create", function(req, res, next) {
     .catch(err => {
       res.status(500).send(err);
     });
-});
+
+})
 
 module.exports = router;
