@@ -16,9 +16,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/create', function(req, res, next) {
-  console.log(req.body)
   var newUser = new User(req.body)
-  console.log(newUser)
   User.create(newUser)
     .then(result => {
       res.send(result);
