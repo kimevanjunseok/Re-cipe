@@ -16,23 +16,29 @@ router.get("/", function(req, res) {
 
 router.get("/detail", function(req, res) {});
 
-router.post("/create", function(req, res) {
-  var recipe = new Recipe();
-  recipe.name = req.body.name;
-  recipe.userid = req.body.userid;
-  recipe.ingredients = [[0], [0]];
-  recipe.info = [[1], [1]];
-  recipe.picture = "hi";
+// router.post("/create", function(req, res) {
+//   var recipe = new Recipe();
+//   recipe.name = req.body.name;
+//   recipe.userid = req.body.userid;
+//   recipe.ingredients = [[0], [0]];
+//   recipe.info = [[1], [1]];
+//   recipe.picture = "hi";
 
-  recipe.save(function(err) {
-    if (err) {
-      console.error(err);
-      res.json({ result: 0 });
-      return;
-    }
+//   recipe.save(function(err) {
+//     if (err) {
+//       console.error(err);
+//       res.json({ result: 0 });
+//       return;
+//     }
 
-    res.json({ result: 1 });
-  });
+//     res.json({ result: 1 });
+//   });
+// });
+
+router.post("/create", (req, res) => {
+  Recipe.create(req.body)
+    .then(recipe => res.send(recipe))
+    .catch(err => res.status(500).send(err));
 });
 
 module.exports = router;
