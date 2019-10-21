@@ -47,11 +47,20 @@ router.post("/create", function(req, res) {
   });
 });
 
-router.post("/update/:recipeid", (req, res) => {
-  Recipe.update({ _id: req.params.recipeid }, req.body, function(err, output) {
+router.post("/update/:recipe_id", (req, res) => {
+  Recipe.update({ _id: req.params.recipe_id }, req.body, function(err, output) {
     if (err) return res.status(500).json({ error: "database failure" });
     if (!output.n) return res.status(404).json({ error: "recipe not found" });
     res.json({ message: "recipe updated" });
+  });
+});
+
+router.delete("/delete/:recipe_id", (req, res) => {
+  Recipe.remove({ _id: req.params.recipe_id }, function(err, output) {
+    if (err) return res.status(500).json({ error: "database failure" });
+    if (!output.result.n)
+      return res.status(404).json({ error: "recipe not found" });
+    res.json({ message: "recipe deleted" });
   });
 });
 
