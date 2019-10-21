@@ -23,8 +23,12 @@ export default {
             this.ingredients = this.ingredient.split(' ')
             this.$http.post('/api/users/create/', {userid: this.userid, password: this.password, ingredients: this.ingredients})
                 .then((response) => {
-                    alert('Success')
-                    this.$router.push('/Login')
+                    if (response.data) {
+                        alert('Success')
+                        window.location.href = '/';
+                    } else {
+                        alert('이미 사용중인 ID입니다.')
+                    }
                 })
                 .catch(function (error) {
                     alert('error message: ' + error)

@@ -13,17 +13,17 @@ export default new Router({
             component: () => import('./components/MainHomePage.vue'),
             meta: { requiresAuth: true }
         },
-        {
-            path: '/SignUp',
-            name: 'SignUp',
-            component: () => import('./components/SignUp.vue'),
-            meta: { requiresAuth: true }
-        },
-        {
-            path: '/Login',
-            name: 'Login',
-            component: () => import('./components/Login.vue'),
-            meta: { requiresAuth: true }
-        },
+        // {
+        //     path: '/SignUp',
+        //     name: 'SignUp',
+        //     component: () => import('./components/auth/SignUp.vue'),
+        //     meta: { requiresAuth: true }
+        // },
+        // {
+        //     path: '/Login',
+        //     name: 'Login',
+        //     component: () => import('./components/auth/Login.vue'),
+        //     meta: { requiresAuth: true }
+        // },
     ]
 })

@@ -20,8 +20,8 @@ export default {
             this.$http.post('/api/users/login/', {userid: this.userid, password: this.password})
                 .then((response) => {
                     sessionStorage.setItem('userinfo', JSON.stringify({userid: response.data.userid, ingredients: response.data.ingredients}))
-                    alert('Success')
-                    this.$router.push('/');
+                    alert('Login')
+                    window.location.href = '/';
                 })
                 .catch(function (error) {
                     alert('error message: ' + error)
