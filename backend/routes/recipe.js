@@ -35,10 +35,24 @@ router.get("/detail", function(req, res) {});
 //   });
 // });
 
-router.post("/create", (req, res) => {
-  Recipe.create(req.body)
-    .then(recipe => res.send(recipe))
-    .catch(err => res.status(500).send(err));
+router.post("/create", function(req, res) {
+  var recipe = new Recipe(req.body);
+  recipe.save(function(err) {
+    if (err) {
+      console.error(err);
+      res.json({ result: 0 });
+      return;
+    }
+    res.json({ result: 1 });
+  });
+});
+
+router.post("/update/:recipeid", (req, res) => {
+  Recipe.update({ _id: req.params.recipeid }, req.body, function(err, output) {
+    if (err) return res.status(500).json({ error: "database failure" });
+    if (!output.n) return res.status(404).json({ error: "recipe not found" });
+    res.json({ message: "recipe updated" });
+  });
 });
 
 module.exports = router;
