@@ -17,7 +17,7 @@ router.get("/", function(req, res, next) {
 });
 
 router.post('/create', function(req, res, next) {
-  var newUser = new User(req.body)
+  const newUser = new User(req.body)
   let cipher = crypto.createCipher('aes192', 'key')
   cipher.update(newUser.password, 'utf8', 'base64')
   let cipheredOutput = cipher.final('base64')
@@ -31,6 +31,27 @@ router.post('/create', function(req, res, next) {
       res.status(500).send(err);
     });
 
+})
+
+router.post('/login', function(req, res, next) {
+  const userinfo = req.body
+  let cipher = crypto.createCipher('aes192', 'key')
+  cipher.update(userinfo.password, 'utf8', 'base64')
+  let cipherPw  = cipher.final('base64')
+  User.findOne({userid: userinfo.userid, password: cipherPw}, function(err, user){
+    
+    if(err) {// 구문 error
+      return res.status(500).json({error: err})
+    };
+    
+    if(!user) {// User가 없으면 error
+      return res.status(404).json({error: 'user not found'})
+    } else {
+      console.log(req.session)
+    }
+  
+    res.json(user);
+  })
 })
 
 module.exports = router;
