@@ -2,34 +2,31 @@
     <div>
         <input type="text" v-model="userid" placeholder="ID">
         <input type="password" v-model="password" placeholder="Password">
-        <input type="text" v-model="ingredient" placeholder="재료">
-        <button @click="SignUp()">확인</button>
+        <button @click="Login()">확인</button>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'SignUp',
+    name: 'Login',
     data() {
         return {
             userid: "",
             password: "",
-            ingredient: "",
-            ingredients: [],
         }
     },
     methods: {
-        SignUp: function() {
-            this.ingredients = this.ingredient.split(' ')
-            this.$http.post('/api/users/create/', {userid: this.userid, password: this.password, ingredients: this.ingredients})
+        Login: function() {
+            this.$http.post('/api/users/login/', {userid: this.userid, password: this.password})
                 .then((response) => {
+                    sessionStorage.setItem('userinfo', JSON.stringify({userid: response.data.userid, ingredients: response.data.ingredients}))
                     alert('Success')
-                    this.$router.push('/Login')
+                    this.$router.push('/');
                 })
                 .catch(function (error) {
                     alert('error message: ' + error)
                 })
-    }
-  },
+        }
+    },
 }
 </script>
