@@ -14,8 +14,6 @@ router.get("/", function(req, res) {
   });
 });
 
-router.get("/detail", function(req, res) {});
-
 // router.post("/create", function(req, res) {
 //   var recipe = new Recipe();
 //   recipe.name = req.body.name;
