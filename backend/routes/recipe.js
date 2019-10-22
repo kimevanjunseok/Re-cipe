@@ -34,6 +34,7 @@ router.get("/", function(req, res) {
 // });
 
 router.post("/create", function(req, res) {
+  if (!req.user) return res.status(404).json({ error: "login required" });
   var recipe = new Recipe(req.body);
   recipe.save(function(err) {
     if (err) {
@@ -46,6 +47,8 @@ router.post("/create", function(req, res) {
 });
 
 router.post("/update/:recipe_id", (req, res) => {
+  if (req.user._id != req.body.userid)
+    return res.status(404).json({ error: "user not matched" });
   Recipe.update({ _id: req.params.recipe_id }, req.body, function(err, output) {
     if (err) return res.status(500).json({ error: "database failure" });
     if (!output.n) return res.status(404).json({ error: "recipe not found" });
@@ -54,6 +57,8 @@ router.post("/update/:recipe_id", (req, res) => {
 });
 
 router.delete("/delete/:recipe_id", (req, res) => {
+  if (req.user._id != req.body.userid)
+    return res.status(404).json({ error: "user not matched" });
   Recipe.remove({ _id: req.params.recipe_id }, function(err, output) {
     if (err) return res.status(500).json({ error: "database failure" });
     if (!output.result.n)
