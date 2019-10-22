@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <button @click="Logout()">로그아웃</button>
-    </div>
+    <a class="a-logout" @click="Logout()">로그아웃</a>
 </template>
 
 <script>
@@ -23,3 +21,9 @@ export default {
     }
 }
 </script>
+
+<style>
+.a-logout {
+    cursor: pointer;
+}
+</style>

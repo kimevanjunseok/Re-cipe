@@ -1,22 +1,23 @@
 <template>
     <div>
+        <Login/>
     </div>
 </template>
 
 <script>
+import Login from "./Login"
+
 export default {
-    name: 'MainHomePage',
+    name: "User",
     components: {
+        Login,
     },
     data() {
         return {
-            data: ""
+
         }
     },
-    created() {
-        this.data = JSON.parse(sessionStorage.getItem('userinfo'))
-    },
-}
+}   
 </script>
 
 <style>
