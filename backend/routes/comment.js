@@ -15,6 +15,7 @@ router.get("/", function(req, res) {
 });
 
 router.post("/create", function(req, res) {
+  if (!req.user) return res.status(404).json({ error: "login required" });
   var comment = new Comment(req.body);
   comment.save(function(err) {
     if (err) {
@@ -27,6 +28,8 @@ router.post("/create", function(req, res) {
 });
 
 router.post("/update/:comment_id", (req, res) => {
+  if (req.user._id != req.body.userid)
+    return res.status(404).json({ error: "user not matched" });
   Comment.update({ _id: req.params.comment_id }, req.body, function(
     err,
     output
@@ -38,6 +41,8 @@ router.post("/update/:comment_id", (req, res) => {
 });
 
 router.delete("/delete/:comment_id", (req, res) => {
+  if (req.user._id != req.body.userid)
+    return res.status(404).json({ error: "user not matched" });
   Comment.remove({ _id: req.params.comment_id }, function(err, output) {
     if (err) return res.status(500).json({ error: "database failure" });
     if (!output.result.n)
