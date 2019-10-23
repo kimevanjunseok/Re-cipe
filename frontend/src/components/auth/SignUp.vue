@@ -4,7 +4,7 @@
         <input class="input-signup" type="text" v-model="userid" placeholder="ID"><br>
         <input class="input-signup" type="password" v-model="password" placeholder="Password"><br>
         <input class="input-signup" type="text" v-on:keyup.enter="Ingredient_save()" id="ingredient" v-model="ingredient" placeholder="재료"><br>
-        <div class="md-chips"></div>
+        <div class="md-chips" id="md-chips"></div>
         <button class="btn-signup" @click="SignUp()">가입</button>
         <router-link class="btn-signup" to="/User" tag="button">로그인</router-link>
     </div>
@@ -22,14 +22,20 @@ export default {
             ingredients: [],
         }
     },
+    mounted() {
+        document.getElementById('md-chips').onclick = (res) => {
+            if (res.path[0].id) {
+                this.Ingredient_delete(res.path[0].id)
+            }
+        };
+    },
     methods: {
         SignUp: function() {
-            this.ingredients = this.ingredient.split(' ')
             this.$http.post('/api/users/create/', {userid: this.userid, password: this.password, ingredients: this.ingredients})
                 .then((response) => {
                     if (response.data) {
                         alert('Success')
-                        window.location.href = '/';
+                        window.location.href = '/User';
                     } else {
                         alert('이미 사용중인 ID입니다.')
                     }
@@ -39,14 +45,28 @@ export default {
                 })
         },
         Ingredient_save: function() {
-            $('.md-chips').append(`<div class="md-chip">
-                                    <span>${this.ingredient}</span>
-                                    <button type="button" class="md-chip-remove">
-                                    </button>
-                                </div>`)
-            this.ingredients.push(this.ingredient)
-            this.ingredient = ""
-        }
+            if (this.ingredient.split(' ') == this.ingredient) {
+                $('.md-chips').append(`<div class="md-chip" id="${this.ingredient}">
+                                        <span>${this.ingredient}</span>
+                                        <button type="button" id="${this.ingredient}" class="md-chip-remove">
+                                        </button>
+                                    </div>`)
+                this.ingredients.push(this.ingredient)
+                this.ingredient = ""
+            }
+        },
+        Ingredient_delete(ingredient_data) {
+            var cnt = 0
+            this.ingredients.some(element => {
+                if (element === ingredient_data){
+                    return true
+                } else {
+                    cnt += 1
+                }
+            });
+            this.ingredients.splice(cnt, 1)
+            $('.md-chip').remove('#' + `${ingredient_data}`)
+        },
   },
 }
 </script>
@@ -66,26 +86,6 @@ $md-chip-color: #e0e0e0;
   &.md-chip-hover:hover {
     background: #ccc;
   }
-}
-
-.md-chip-clickable {
- cursor: pointer;
-}
-
-.md-chip, .md-chip-icon {
-  height: $md-chip-height;
-  line-height: $md-chip-height;
-}
-
-.md-chip-icon {
-  display: block;
-  float: left;
-  background: #009587;
-  width: $md-chip-height;
-  border-radius: 50%;
-  text-align: center;
-  color: white;
-  margin: 0 8px 0 -12px;
 }
 
 .md-chip-remove {
@@ -117,10 +117,6 @@ $md-chip-color: #e0e0e0;
   .md-chip {
     margin: 0 5px 3px 0;
   } 
-}
-
-.md-chip-raised {
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
 }
 
 .div-signup {
