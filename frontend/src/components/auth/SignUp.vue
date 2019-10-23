@@ -1,12 +1,13 @@
 <template>
     <div class="div-signup">
-        <h1>회원가입</h1>
+        <h2>가입하기</h2>
         <input class="input-signup" type="text" v-model="userid" placeholder="ID"><br>
         <input class="input-signup" type="password" v-model="password" placeholder="Password"><br>
         <input class="input-signup" type="text" v-on:keyup.enter="Ingredient_save()" id="ingredient" v-model="ingredient" placeholder="재료"><br>
         <div class="md-chips" id="md-chips"></div>
         <button class="btn-signup" @click="SignUp()">가입</button>
-        <router-link class="btn-signup" to="/User" tag="button">로그인</router-link>
+
+        <!-- <router-link class="btn-signup" to="/User" tag="button">로그인</router-link> -->
     </div>
 
 </template>
@@ -46,13 +47,17 @@ export default {
         },
         Ingredient_save: function() {
             if (this.ingredient.split(' ') == this.ingredient) {
-                $('.md-chips').append(`<div class="md-chip" id="${this.ingredient}">
-                                        <span>${this.ingredient}</span>
-                                        <button type="button" id="${this.ingredient}" class="md-chip-remove">
-                                        </button>
-                                    </div>`)
-                this.ingredients.push(this.ingredient)
-                this.ingredient = ""
+                if (this.ingredients.length > 9) {
+                    alert('10개 이하로 입력해주세요!')
+                } else {
+                    $('.md-chips').append(`<div class="md-chip" id="${this.ingredient}">
+                                            <span>${this.ingredient}</span>
+                                            <button type="button" id="${this.ingredient}" class="md-chip-remove">
+                                            </button>
+                                        </div>`)
+                    this.ingredients.push(this.ingredient)
+                    this.ingredient = ""
+                }
             }
         },
         Ingredient_delete(ingredient_data) {
@@ -121,9 +126,12 @@ $md-chip-color: #e0e0e0;
 
 .div-signup {
     margin-top: 80px;
+    h2 {
+        color:#999;
+    }
 }
 .input-signup {
-    width: 40%;
+    width: 80%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -132,11 +140,11 @@ $md-chip-color: #e0e0e0;
     box-sizing: border-box;
 }
 .btn-signup {
-    width: 19.5%;
-    background-color: green;
+    width: 80%;
+    background-color: #FF92B1;
     color: white;
     padding: 14px 20px;
-    margin: 8px 8px;
+    margin: 2%;
     border: none;
     border-radius: 4px;
     cursor: pointer;
