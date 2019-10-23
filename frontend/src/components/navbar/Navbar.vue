@@ -21,7 +21,6 @@ export default {
     },
     created() {
         this.data = JSON.parse(sessionStorage.getItem('userinfo'))
-        console.log(this.data)
     },
 
 }
