@@ -6,4 +6,4 @@ const scoreSchema = new mongoose.Schema({
   score: { type: Number, required: true }
 });
 
-module.exports = mongoose.model("Comment", scoreSchema);
+module.exports = mongoose.model("Score", scoreSchema);
