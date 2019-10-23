@@ -1,10 +1,11 @@
 <template>
     <div class="div-login">
-        <h1>로그인</h1>
+        <h2>로그인</h2>
         <input class="input-login" type="text" v-model="userid" placeholder="ID"><br>
         <input class="input-login" type="password" v-model="password" placeholder="Password"><br>
         <button class="btn-login" @click="Login()">로그인</button>
-        <router-link class="btn-login" to="/User/SignUp" tag="button">회원가입</router-link>
+        <hr class="hr-login">
+        <h5 class="h5-login" @click="SignMove()">회원가입</h5>
     </div>
 </template>
 
@@ -28,17 +29,23 @@ export default {
                 .catch(function (error) {
                     alert('error message: ' + error)
                 })
+        },
+        SignMove: function() {
+            this.$router.push('/User/SignUp/')
         }
     },
 }
 </script>
 
-<style>
+<style lang="scss">
 .div-login {
     margin-top: 80px;
+    h2 {
+        color: #999;
+    }
 }
 .input-login {
-    width: 40%;
+    width: 80%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -47,16 +54,24 @@ export default {
     box-sizing: border-box;
 }
 .btn-login {
-    width: 19.5%;
-    background-color: green;
+    width: 80%;
+    background-color: #FF92B1;
     color: white;
     padding: 14px 20px;
-    margin: 8px 8px;
+    margin: 2%;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 .btn-login:hover {
     opacity: 0.7;
+}
+
+.hr-login {
+    width: 20%;
+}
+
+.h5-login {
+    text-decoration:none;
 }
 </style>
