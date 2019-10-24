@@ -8,4 +8,5 @@ $(".door-handle").on("click", function(){
     console.log(name)
     // add the animation to either the left or right door
     $(".door."+name).addClass(name+"-DoorOpen");
+    $(".door2." + name).addClass(name + "-DoorOpen");
 });
