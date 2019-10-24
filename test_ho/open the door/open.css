@@ -1,18 +1,46 @@
 @-webkit-keyframes left-DoorOpen {
     0% {
-      -webkit-transform: translate(0px, 0px); }
+      -webkit-transform: perspective(400px) rotateY(0deg); }
   
     100% {
-      -webkit-transform: translate(300px, 0px); } }
+      -webkit-transform: perspective(400px) rotateY(-45deg); } }
+  
+  @-moz-keyframes left-DoorOpen {
+    0% {
+      -moz-transform: perspective(400px) rotateY(0deg); }
+  
+    100% {
+      -moz-transform: perspective(400px) rotateY(-45deg); } }
+  
+  @keyframes left-DoorOpen {
+    0% {
+      transform: perspective(400px) rotateY(0deg); }
+  
+    100% {
+      transform: perspective(400px) rotateY(-45deg); } }
   
   @-webkit-keyframes right-DoorOpen {
     0% {
-      -webkit-transform: translate(0px, 0px); }
+      -webkit-transform: perspective(400px) rotateY(0deg); }
   
     100% {
-      -webkit-transform: translate(-360px, 0px); } }
+      -webkit-transform: perspective(400px) rotateY(45deg); } }
   
-  html, body, .door, .door2 {
+  @-moz-keyframes right-DoorOpen {
+    0% {
+      -moz-transform: perspective(400px) rotateY(0deg); }
+  
+    100% {
+      -moz-transform: perspective(400px) rotateY(45deg); } }
+  
+  @keyframes right-DoorOpen {
+    0% {
+      transform: perspective(400px) rotateY(0deg); }
+  
+    100% {
+      transform: perspective(400px) rotateY(45deg); } }
+  
+  html, body, .door {
     margin: 0;
     padding: 0;  
     overflow: hidden;
@@ -25,7 +53,7 @@
     background-repeat: no-repeat;
     background-position: center top;  
   }
-/*   
+  
   .wall {
     height: 100%;
     background-color: #CECECE;
@@ -40,25 +68,13 @@
     width: 25%;
     position: absolute;
     right: 0;
-    z-index: 1; } */
+    z-index: 1; }
   
   .door {
     float: left;
-    width: 100%;
+    width: 50%;
     position: relative;
-    background: url(test_res2\(mobile\).png) 50%/ cover;
-    -webkit-animation-fill-mode: both;
-    -moz-animation-fill-mode: both;
-    animation-fill-mode: both;
-    -webkit-animation-duration: 2s;
-    -moz-animation-duration: 2s;
-    animation-duration: 2s; }
-  
-  .door2 {
-    float: right;
-    width: 100%;
-    position: relative;
-    background: url(test_res\(mobile\).png) 50%/ cover;
+    background: url(test_res.png) 50%/ cover;
     -webkit-animation-fill-mode: both;
     -moz-animation-fill-mode: both;
     animation-fill-mode: both;
@@ -83,8 +99,10 @@
   
   .left-DoorOpen {
     -webkit-animation-name: left-DoorOpen;
+    -moz-animation-name: left-DoorOpen;
     animation-name: left-DoorOpen; }
   
   .right-DoorOpen {
     -webkit-animation-name: right-DoorOpen;
+    -moz-animation-name: right-DoorOpen;
     animation-name: right-DoorOpen; }
