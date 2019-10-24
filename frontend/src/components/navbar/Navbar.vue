@@ -43,6 +43,7 @@ export default {
 
 <style lang="scss">
 ul {
+    text-align: center;
     list-style-type: none;
     margin: 0;
     padding: 0;

@@ -1,9 +1,11 @@
 <template>
     <div class="div-login">
         <h2>로그인</h2>
-        <input class="input-login" type="text" v-model="userid" placeholder="ID"><br>
-        <input class="input-login" type="password" v-model="password" placeholder="Password"><br>
-        <button class="btn-login" @click="Login()">로그인</button>
+        <form>
+            <input class="input-login" type="text" v-model="userid" placeholder="ID"><br>
+            <input class="input-login" type="password" v-model="password" placeholder="Password"><br>
+            <input type="submit" value="로그인" class="btn-login" @click="Login()">
+        </form>
         <hr class="hr-login">
         <h5 class="h5-login" @click="SignMove()">회원가입</h5>
     </div>
@@ -17,6 +19,9 @@ export default {
             userid: "",
             password: "",
         }
+    },
+    created() {
+
     },
     methods: {
         Login: function() {
