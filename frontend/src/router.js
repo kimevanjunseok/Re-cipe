@@ -9,18 +9,18 @@ const router = new Router({
     routes: [
         {
             path: '/',
+            name: 'User',
+            component: () => import('./components/auth/Login.vue'),
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/Main',
             name: 'MainHomePage',
             component: () => import('./components/MainHomePage.vue'),
             meta: { requiresAuth: true }
         },
         {
-            path: '/User',
-            name: 'User',
-            component: () => import('./components/auth/User.vue'),
-            meta: { requiresAuth: true }
-        },
-        {
-            path: '/User/SignUp',
+            path: '/SignUp',
             name: 'SignUp',
             component: () => import('./components/auth/SignUp.vue'),
             meta: { requiresAuth: true }
