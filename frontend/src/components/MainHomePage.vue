@@ -1,6 +1,6 @@
 <template>
     <div style="margin-top:80px;">
-        
+        <img src="../assets/main.jpg">
     </div>
 </template>
 
@@ -21,5 +21,6 @@ export default {
 </script>
 
 <style>
+img { width: 100%; height: auto; }
 
 </style>

@@ -1,9 +1,19 @@
 <template>
-    <ul class="navbar">
-        <li><router-link to="/">NAMBIGATION</router-link></li>
-        <li v-if="!data" style="float:right"><router-link class="active" to="/User">User</router-link></li>
+
+   <!-- 첫번째 헤더 -->
+   <div>
+     <ul class="upper">
+        <li><img src="../../assets/abc.png" style="width:70px; height:70px;"></li>
+        <li v-if="!data" style="float:right;"><router-link class="active" to="/User">LOGIN</router-link></li>
         <li v-else style="float:right"><Logout/></li>
-    </ul>
+     </ul>
+   <!-- 두번째 헤더 -->
+      <ul class="navbar">
+          <li><router-link to="/">HOME</router-link></li>
+          <li><router-link to="/">레시피</router-link></li>
+          <li><router-link to="/">My 레시피</router-link></li>
+      </ul>
+    </div>
 </template>
 
 <script>
@@ -27,15 +37,22 @@ export default {
 </script>
 
 <style>
+.upper {
+  padding:20px 0;
+  background-color:rgb(255, 125, 0) ;
+}
 .navbar {
-    
+  display: flex; justify-content: center;
+  margin-top: 80px;
+  padding:10px 0;
+  z-index: 8;
 }
 ul {
   list-style-type: none;
   margin: 0;
-  padding: 0;
+  padding: 0 5;
   overflow: hidden;
-  background-color: green;
+  background-color: rgb(233, 233, 233);
   position: fixed;
   top: 0;
   width: 100%;
@@ -43,13 +60,15 @@ ul {
 
 li {
   float: left;
+  text-align: center;
+  display: inline-block;
 }
 
 li a {
-  display: block;
+  display: inline-block;
   color: white;
   text-align: center;
-  padding: 14px 16px;
+  padding: 14px 20px;
   text-decoration: none;
 }
 

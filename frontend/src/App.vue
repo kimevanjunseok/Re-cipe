@@ -2,7 +2,7 @@
   <div id="app">
     <Navbar/>
       <v-content>
-        <router-view></router-view>
+        <router-view style="margin-top:200px;"></router-view>
       </v-content>
   </div>
 </template>
