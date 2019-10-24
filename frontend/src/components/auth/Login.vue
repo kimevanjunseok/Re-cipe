@@ -80,8 +80,4 @@ export default {
 .hr-login {
     width: 20%;
 }
-
-.h5-login {
-    text-decoration:none;
-}
 </style>

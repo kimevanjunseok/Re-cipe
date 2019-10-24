@@ -10,6 +10,8 @@
         <p class="p-ingredient" v-show="error.ingredient">{{ error.ingredient }}</p>
         <div class="md-chips" id="md-chips"></div>
         <button class="btn-signup" @click="SignUp()">가입</button>
+        <hr class="hr-signup">
+        <h5 class="h5-signup" @click="LoginMove()">로그인</h5>
 
     </div>
 
@@ -118,6 +120,9 @@ export default {
             this.ingredients.splice(cnt, 1)
             $('.md-chip').remove('#' + `${ingredient_data}`)
         },
+        LoginMove: function() {
+            this.$router.push('/')
+        }
   },
 }
 </script>
@@ -202,5 +207,9 @@ $md-chip-color: #e0e0e0;
 }
 .btn-signup:hover {
     opacity: 0.7;
+}
+
+.hr-signup {
+    width: 20%;
 }
 </style>
