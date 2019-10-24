@@ -1,17 +1,23 @@
 <template>
-    <div style="margin-top:80px;">
-        
-    </div>
+<v-content>
+    <Search/>
+    <Ref/>
+</v-content>
 </template>
 
 <script>
+import Search from './search/Search'
+import Ref from './Ref'
+
 export default {
     name: 'MainHomePage',
     components: {
+        Search,
+        Ref,
     },
     data() {
         return {
-            data: ""
+            data: "",
         }
     },
     created() {
@@ -19,7 +25,3 @@ export default {
     },
 }
 </script>
-
-<style>
-
-</style>

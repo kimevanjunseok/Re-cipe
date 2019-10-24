@@ -1,5 +1,5 @@
 <template>
-    <a class="a-logout" @click="Logout()">로그아웃</a>
+    <i id="nav-icon" style="padding: 14px 16px;" @click="Logout()" class="fas fa-sign-out-alt"></i>
 </template>
 
 <script>
@@ -22,8 +22,5 @@ export default {
 }
 </script>
 
-<style>
-.a-logout {
-    cursor: pointer;
-}
+<style lang="scss">
 </style>
