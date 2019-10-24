@@ -8,9 +8,21 @@ export default new Router({
     base: process.env.BASE_URL,
     routes: [
         {
-            path: '/SignUp',
+            path: '/',
+            name: 'MainHomePage',
+            component: () => import('./components/MainHomePage.vue'),
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/User',
+            name: 'User',
+            component: () => import('./components/auth/User.vue'),
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/User/SignUp',
             name: 'SignUp',
-            component: () => import('./components/SignUp.vue'),
+            component: () => import('./components/auth/SignUp.vue'),
             meta: { requiresAuth: true }
         },
     ]
