@@ -7,7 +7,8 @@
             <input type="submit" value="로그인" class="btn-login" @click="Login()">
         </form>
         <hr class="hr-login">
-        <h5 class="h5-login" @click="SignMove()">회원가입</h5>
+        <h5 class="h5-login" @click="SignMove(false)">비회원</h5>
+        <h5 class="h5-login" @click="SignMove(true)">회원가입</h5>
     </div>
 </template>
 
@@ -29,14 +30,18 @@ export default {
                 .then((response) => {
                     sessionStorage.setItem('userinfo', JSON.stringify({userid: response.data.userid, ingredients: response.data.ingredients}))
                     alert('Login')
-                    window.location.href = '/';
+                    window.location.href = '/Main';
                 })
                 .catch(function (error) {
                     alert('error message: ' + error)
                 })
         },
-        SignMove: function() {
-            this.$router.push('/User/SignUp/')
+        SignMove: function(rt) {
+            if (rt) {
+                this.$router.push('/SignUp')
+            } else {
+                this.$router.push('/Main')
+            }
         }
     },
 }

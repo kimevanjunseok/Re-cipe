@@ -76,7 +76,7 @@ export default {
                         if (response.data) {
                             alert('Success')
                             sessionStorage.setItem('userinfo', JSON.stringify({userid: response.data.userid, ingredients: response.data.ingredients}))
-                            window.location.href = '/';
+                            window.location.href = '/Main';
                         } else {
                             alert('이미 사용중인 ID입니다.')
                         }
