@@ -1,13 +1,16 @@
 <template>
     <div class="div-signup">
         <h2>가입하기</h2>
+    
         <input class="input-signup" type="text" v-model="userid" placeholder="ID"><br>
+        <p class="p-id" v-show="error.id">{{ error.id }}</p>
         <input class="input-signup" type="password" v-model="password" placeholder="Password"><br>
+        <p class="p-password" v-show="error.password">{{ error.password }}</p>
         <input class="input-signup" type="text" v-on:keyup.enter="Ingredient_save()" id="ingredient" v-model="ingredient" placeholder="재료"><br>
+        <p class="p-ingredient" v-show="error.ingredient">{{ error.ingredient }}</p>
         <div class="md-chips" id="md-chips"></div>
         <button class="btn-signup" @click="SignUp()">가입</button>
 
-        <!-- <router-link class="btn-signup" to="/User" tag="button">로그인</router-link> -->
     </div>
 
 </template>
@@ -17,6 +20,11 @@ export default {
     name: 'SignUp',
     data() {
         return {
+            error: {
+                id: "",
+                password: "",
+                ingredient: "",
+            },
             userid: "",
             password: "",
             ingredient: "",
@@ -30,34 +38,72 @@ export default {
             }
         };
     },
+    watch: {
+        userid: function () {
+            if (this.userid.length === 0) {
+                this.error.id = "ID를 입력해주세요"
+            } else if (this.userid.length < 4) {
+                this.error.id = "최소 4자 이상 입력해주세요"
+            } else {
+                this.error.id = ""
+            }
+        },
+        password: function () {
+            if (this.password.length === 0) {
+                this.error.password = "Password를 입력해주세요"
+            } else if (this.password.length < 4) {
+                this.error.password = "최소 4자 이상 입력해주세요"
+            } else {
+                this.error.password = ""
+            }
+        }
+    },
     methods: {
         SignUp: function() {
-            this.$http.post('/api/users/create/', {userid: this.userid, password: this.password, ingredients: this.ingredients})
-                .then((response) => {
-                    if (response.data) {
-                        alert('Success')
-                        window.location.href = '/User';
-                    } else {
-                        alert('이미 사용중인 ID입니다.')
-                    }
-                })
-                .catch(function (error) {
-                    alert('error message: ' + error)
-                })
+            if (this.userid.length === 0) {
+                alert("ID를 입력해주세요!")
+                this.error.id = "ID를 입력해주세요"
+            } else if (this.userid.length < 4) {
+                alert("최소 4자 이상 입력해주세요!")
+            } else if (this.password.length === 0) {
+                alert("Password를 입력해주세요")
+                this.error.password = "Password를 입력해주세요"
+            } else if (this.password.length < 4) {
+                alert("최소 4자 이상 입력해주세요")
+            } else {
+                this.$http.post('/api/users/create/', {userid: this.userid, password: this.password, ingredients: this.ingredients})
+                    .then((response) => {
+                        if (response.data) {
+                            alert('Success')
+                            sessionStorage.setItem('userinfo', JSON.stringify({userid: response.data.userid, ingredients: response.data.ingredients}))
+                            window.location.href = '/';
+                        } else {
+                            alert('이미 사용중인 ID입니다.')
+                        }
+                    })
+                    .catch(function (error) {
+                        alert('error message: ' + error)
+                    })
+            }
         },
         Ingredient_save: function() {
             if (this.ingredient.split(' ') == this.ingredient) {
                 if (this.ingredients.length > 9) {
-                    alert('10개 이하로 입력해주세요!')
+                    this.error.ingredient = "10개 이하로 입력해주세요!"
                 } else {
-                    $('.md-chips').append(`<div class="md-chip" id="${this.ingredient}">
-                                            <span>${this.ingredient}</span>
-                                            <button type="button" id="${this.ingredient}" class="md-chip-remove">
-                                            </button>
-                                        </div>`)
-                    this.ingredients.push(this.ingredient)
-                    this.ingredient = ""
+                    if (this.ingredients.includes(this.ingredient)) {
+                        this.error.ingredient = "이미 넣은 재료입니다"
+                    } else {
+                        $('.md-chips').append(`<div class="md-chip" id="${this.ingredient}">
+                                                <span>${this.ingredient}</span>
+                                                <button type="button" id="${this.ingredient}" class="md-chip-remove">
+                                                </button>
+                                            </div>`)
+                        this.ingredients.push(this.ingredient)
+                        this.error.ingredient = ""
+                    }
                 }
+                this.ingredient = ""
             }
         },
         Ingredient_delete(ingredient_data) {
@@ -128,6 +174,11 @@ $md-chip-color: #e0e0e0;
     margin-top: 80px;
     h2 {
         color:#999;
+    }
+    .p-id, .p-password, .p-ingredient {
+        font-size: 70%;
+        margin: 0px;
+        color: red;
     }
 }
 .input-signup {
