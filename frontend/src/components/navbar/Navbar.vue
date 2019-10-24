@@ -1,6 +1,7 @@
 <template>
   <div>
     <ul id="navbar">
+<<<<<<< HEAD
       <!-- <li><router-link class="active" to="/User"><i id="nav-icon" class="fas fa-search"></i></router-link></li> -->
       <li>
         <router-link id="nav-li" to="/">NAMBIGATION</router-link>
@@ -13,6 +14,12 @@
       <li v-else style="float:right">
         <Logout />
       </li>
+=======
+        <!-- <li><router-link class="active" to="/User"><i id="nav-icon" class="fas fa-search"></i></router-link></li> -->
+        <li><router-link id="nav-li" to="/Main">NAMBIGATION</router-link></li>
+        <li v-if="!data" style="float:right"><router-link class="active" to="/"><i id="nav-icon" class="far fa-user"></i></router-link></li>
+        <li v-else style="float:right"><Logout/></li>
+>>>>>>> 46ad54fe2749bf1e76fe96bdf9305b9883ad0857
     </ul>
   </div>
 </template>
