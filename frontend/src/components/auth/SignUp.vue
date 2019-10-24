@@ -7,11 +7,10 @@
         <input class="input-signup" type="password" v-model="password" placeholder="Password"><br>
         <p class="p-password" v-show="error.password">{{ error.password }}</p>
         <input class="input-signup" type="text" v-on:keyup.enter="Ingredient_save()" id="ingredient" v-model="ingredient" placeholder="재료"><br>
+        <p class="p-ingredient" v-show="error.ingredient">{{ error.ingredient }}</p>
         <div class="md-chips" id="md-chips"></div>
         <button class="btn-signup" @click="SignUp()">가입</button>
 
-
-        <!-- <router-link class="btn-signup" to="/User" tag="button">로그인</router-link> -->
     </div>
 
 </template>
@@ -24,6 +23,7 @@ export default {
             error: {
                 id: "",
                 password: "",
+                ingredient: "",
             },
             userid: "",
             password: "",
@@ -89,16 +89,21 @@ export default {
         Ingredient_save: function() {
             if (this.ingredient.split(' ') == this.ingredient) {
                 if (this.ingredients.length > 9) {
-                    alert('10개 이하로 입력해주세요!')
+                    this.error.ingredient = "10개 이하로 입력해주세요!"
                 } else {
-                    $('.md-chips').append(`<div class="md-chip" id="${this.ingredient}">
-                                            <span>${this.ingredient}</span>
-                                            <button type="button" id="${this.ingredient}" class="md-chip-remove">
-                                            </button>
-                                        </div>`)
-                    this.ingredients.push(this.ingredient)
-                    this.ingredient = ""
+                    if (this.ingredients.includes(this.ingredient)) {
+                        this.error.ingredient = "이미 넣은 재료입니다"
+                    } else {
+                        $('.md-chips').append(`<div class="md-chip" id="${this.ingredient}">
+                                                <span>${this.ingredient}</span>
+                                                <button type="button" id="${this.ingredient}" class="md-chip-remove">
+                                                </button>
+                                            </div>`)
+                        this.ingredients.push(this.ingredient)
+                        this.error.ingredient = ""
+                    }
                 }
+                this.ingredient = ""
             }
         },
         Ingredient_delete(ingredient_data) {
@@ -170,7 +175,7 @@ $md-chip-color: #e0e0e0;
     h2 {
         color:#999;
     }
-    .p-id, .p-password{
+    .p-id, .p-password, .p-ingredient {
         font-size: 70%;
         margin: 0px;
         color: red;
