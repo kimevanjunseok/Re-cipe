@@ -9,7 +9,7 @@ const router = new Router({
     routes: [
         {
             path: '/',
-            name: 'User',
+            name: 'Login',
             component: () => import('./components/auth/Login.vue'),
             meta: { requiresAuth: true }
         },
@@ -31,12 +31,16 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
     if (to.name === 'User' || to.name === 'SignUp') {
         if (JSON.parse(sessionStorage.getItem('userinfo'))) {
-            return next('/')
+            if (JSON.parse(sessionStorage.getItem('userinfo'))) {
+                return next('/')
+            }  else {
+                return next()
+            }
         } else {
             return next()
         }
     } else {
-        return next()
+        next()
     }
 })
 
