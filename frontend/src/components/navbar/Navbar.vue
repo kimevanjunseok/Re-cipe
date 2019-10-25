@@ -24,42 +24,21 @@ export default {
     },
     created() {
         this.data = JSON.parse(sessionStorage.getItem('userinfo'))
-        window.addEventListener('scroll', this.onScroll);
     },
-    methods: {
-        onScroll () {
-            if (window.pageYOffset > 80) {
-                document.getElementById('navbar').style.backgroundColor = "#FF92B1";
-                document.getElementById('nav-li').style.color = "#FFFFFF";
-                document.getElementById('nav-icon').style.color = "#FFFFFF";
-            } else {
-                document.getElementById('navbar').style.backgroundColor = "#FFFFFF";
-                document.getElementById('nav-li').style.color = "#999";
-                document.getElementById('nav-icon').style.color = "#999";
-            }
-        }
 
-    },
 }
 </script>
 
 <style lang="scss" scoped>
 ul {
-    text-align: center;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    transition: background-color 1s ease-out;
-    #nav-li {
-        color: #999;
-    }
-    #nav-icon {
-        color: #999;
-    }
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: green;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 li {
