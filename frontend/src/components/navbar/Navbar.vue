@@ -1,12 +1,9 @@
 <template>
-  <div>
-    <ul id="navbar">
-        <li style="float:left"><router-link class="active" to="/User"><i id="nav-icon" class="fas fa-search"></i></router-link></li>
-        <li><router-link id="nav-li" to="/Main">NAMBIGATION</router-link></li>
-        <li v-if="!data" style="float:right"><router-link class="active" to="/"><i id="nav-icon" class="far fa-user"></i></router-link></li>
+    <ul class="navbar">
+        <li><router-link to="/">NAMBIGATION</router-link></li>
+        <li v-if="!data" style="float:right"><router-link class="active" to="/User">User</router-link></li>
         <li v-else style="float:right"><Logout/></li>
-     </ul>
-   </div>
+    </ul>
 </template>
 
 <script>
@@ -29,7 +26,10 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style>
+.navbar {
+    
+}
 ul {
   list-style-type: none;
   margin: 0;
@@ -42,16 +42,19 @@ ul {
 }
 
 li {
-    // float: left;
-    font-family: 'Righteous', cursive;
-    display: inline-block;
+  float: left;
 }
 
 li a {
-    display: inline-block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  opacity: 0.5;
 }
 </style>
