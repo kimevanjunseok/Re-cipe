@@ -1,19 +1,12 @@
 <template>
-
-   <!-- 첫번째 헤더 -->
-   <div>
-     <ul class="upper">
-        <li><img src="../../assets/abc.png" style="width:70px; height:70px;"></li>
-        <li v-if="!data" style="float:right;"><router-link class="active" to="/User">LOGIN</router-link></li>
+  <div>
+    <ul id="navbar">
+        <li style="float:left"><router-link class="active" to="/User"><i id="nav-icon" class="fas fa-search"></i></router-link></li>
+        <li><router-link id="nav-li" to="/Main">NAMBIGATION</router-link></li>
+        <li v-if="!data" style="float:right"><router-link class="active" to="/"><i id="nav-icon" class="far fa-user"></i></router-link></li>
         <li v-else style="float:right"><Logout/></li>
      </ul>
-   <!-- 두번째 헤더 -->
-      <ul class="navbar">
-          <li><router-link to="/">HOME</router-link></li>
-          <li><router-link to="/">레시피</router-link></li>
-          <li><router-link to="/">My 레시피</router-link></li>
-      </ul>
-    </div>
+   </div>
 </template>
 
 <script>
@@ -31,49 +24,55 @@ export default {
     },
     created() {
         this.data = JSON.parse(sessionStorage.getItem('userinfo'))
+        window.addEventListener('scroll', this.onScroll);
     },
+    methods: {
+        onScroll () {
+            if (window.pageYOffset > 80) {
+                document.getElementById('navbar').style.backgroundColor = "#FF92B1";
+                document.getElementById('nav-li').style.color = "#FFFFFF";
+                document.getElementById('nav-icon').style.color = "#FFFFFF";
+            } else {
+                document.getElementById('navbar').style.backgroundColor = "#FFFFFF";
+                document.getElementById('nav-li').style.color = "#999";
+                document.getElementById('nav-icon').style.color = "#999";
+            }
+        }
 
+    },
 }
 </script>
 
-<style>
-.upper {
-  padding:20px 0;
-  background-color:rgb(255, 125, 0) ;
-}
-.navbar {
-  display: flex; justify-content: center;
-  margin-top: 80px;
-  padding:10px 0;
-  z-index: 8;
-}
+<style lang="scss" scoped>
 ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0 5;
-  overflow: hidden;
-  background-color: rgb(233, 233, 233);
-  position: fixed;
-  top: 0;
-  width: 100%;
+    text-align: center;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    transition: background-color 1s ease-out;
+    #nav-li {
+        color: #999;
+    }
+    #nav-icon {
+        color: #999;
+    }
 }
 
 li {
-  float: left;
-  text-align: center;
-  display: inline-block;
+    // float: left;
+    font-family: 'Righteous', cursive;
+    display: inline-block;
 }
 
 li a {
-  display: inline-block;
-  color: white;
-  text-align: center;
-  padding: 14px 20px;
-  text-decoration: none;
-}
-
-/* Change the link color to #111 (black) on hover */
-li a:hover {
-  opacity: 0.5;
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
 }
 </style>

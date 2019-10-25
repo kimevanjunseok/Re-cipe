@@ -1,17 +1,20 @@
 <template>
-    <div style="margin-top:80px;">
-        <img src="../assets/main.jpg">
-    </div>
+  <div>
+    <!-- <Search/> -->
+  </div>
 </template>
 
 <script>
+import Search from './search/Search'
+
 export default {
     name: 'MainHomePage',
     components: {
+        Search,
     },
     data() {
         return {
-            data: ""
+            data: "",
         }
     },
     created() {
@@ -19,8 +22,3 @@ export default {
     },
 }
 </script>
-
-<style>
-img { width: 100%; height: auto; }
-
-</style>

@@ -1,12 +1,16 @@
 <template>
     <div class="div-signup">
-        <h1>회원가입</h1>
+        <h2>가입하기</h2>
+    
         <input class="input-signup" type="text" v-model="userid" placeholder="ID"><br>
+        <p class="p-id" v-show="error.id">{{ error.id }}</p>
         <input class="input-signup" type="password" v-model="password" placeholder="Password"><br>
+        <p class="p-password" v-show="error.password">{{ error.password }}</p>
         <input class="input-signup" type="text" v-on:keyup.enter="Ingredient_save()" id="ingredient" v-model="ingredient" placeholder="재료"><br>
-        <div class="md-chips"></div>
+        <p class="p-ingredient" v-show="error.ingredient">{{ error.ingredient }}</p>
+        <div class="md-chips" id="md-chips"></div>
         <button class="btn-signup" @click="SignUp()">가입</button>
-        <router-link class="btn-signup" to="/User" tag="button">로그인</router-link>
+
     </div>
 
 </template>
@@ -16,37 +20,104 @@ export default {
     name: 'SignUp',
     data() {
         return {
+            error: {
+                id: "",
+                password: "",
+                ingredient: "",
+            },
             userid: "",
             password: "",
             ingredient: "",
             ingredients: [],
         }
     },
+    mounted() {
+        document.getElementById('md-chips').onclick = (res) => {
+            if (res.path[0].id) {
+                this.Ingredient_delete(res.path[0].id)
+            }
+        };
+    },
+    watch: {
+        userid: function () {
+            if (this.userid.length === 0) {
+                this.error.id = "ID를 입력해주세요"
+            } else if (this.userid.length < 4) {
+                this.error.id = "최소 4자 이상 입력해주세요"
+            } else {
+                this.error.id = ""
+            }
+        },
+        password: function () {
+            if (this.password.length === 0) {
+                this.error.password = "Password를 입력해주세요"
+            } else if (this.password.length < 4) {
+                this.error.password = "최소 4자 이상 입력해주세요"
+            } else {
+                this.error.password = ""
+            }
+        }
+    },
     methods: {
         SignUp: function() {
-            this.ingredients = this.ingredient.split(' ')
-            this.$http.post('/api/users/create/', {userid: this.userid, password: this.password, ingredients: this.ingredients})
-                .then((response) => {
-                    if (response.data) {
-                        alert('Success')
-                        window.location.href = '/';
-                    } else {
-                        alert('이미 사용중인 ID입니다.')
-                    }
-                })
-                .catch(function (error) {
-                    alert('error message: ' + error)
-                })
+            if (this.userid.length === 0) {
+                alert("ID를 입력해주세요!")
+                this.error.id = "ID를 입력해주세요"
+            } else if (this.userid.length < 4) {
+                alert("최소 4자 이상 입력해주세요!")
+            } else if (this.password.length === 0) {
+                alert("Password를 입력해주세요")
+                this.error.password = "Password를 입력해주세요"
+            } else if (this.password.length < 4) {
+                alert("최소 4자 이상 입력해주세요")
+            } else {
+                this.$http.post('/api/users/create/', {userid: this.userid, password: this.password, ingredients: this.ingredients})
+                    .then((response) => {
+                        if (response.data) {
+                            alert('Success')
+                            sessionStorage.setItem('userinfo', JSON.stringify({userid: response.data.userid, ingredients: response.data.ingredients}))
+                            window.location.href = '/Main';
+                        } else {
+                            alert('이미 사용중인 ID입니다.')
+                        }
+                    })
+                    .catch(function (error) {
+                        alert('error message: ' + error)
+                    })
+            }
         },
         Ingredient_save: function() {
-            $('.md-chips').append(`<div class="md-chip">
-                                    <span>${this.ingredient}</span>
-                                    <button type="button" class="md-chip-remove">
-                                    </button>
-                                </div>`)
-            this.ingredients.push(this.ingredient)
-            this.ingredient = ""
-        }
+            if (this.ingredient.split(' ') == this.ingredient) {
+                if (this.ingredients.length > 9) {
+                    this.error.ingredient = "10개 이하로 입력해주세요!"
+                } else {
+                    if (this.ingredients.includes(this.ingredient)) {
+                        this.error.ingredient = "이미 넣은 재료입니다"
+                    } else {
+                        $('.md-chips').append(`<div class="md-chip" id="${this.ingredient}">
+                                                <span>${this.ingredient}</span>
+                                                <button type="button" id="${this.ingredient}" class="md-chip-remove">
+                                                </button>
+                                            </div>`)
+                        this.ingredients.push(this.ingredient)
+                        this.error.ingredient = ""
+                    }
+                }
+                this.ingredient = ""
+            }
+        },
+        Ingredient_delete(ingredient_data) {
+            var cnt = 0
+            this.ingredients.some(element => {
+                if (element === ingredient_data){
+                    return true
+                } else {
+                    cnt += 1
+                }
+            });
+            this.ingredients.splice(cnt, 1)
+            $('.md-chip').remove('#' + `${ingredient_data}`)
+        },
   },
 }
 </script>
@@ -66,26 +137,6 @@ $md-chip-color: #e0e0e0;
   &.md-chip-hover:hover {
     background: #ccc;
   }
-}
-
-.md-chip-clickable {
- cursor: pointer;
-}
-
-.md-chip, .md-chip-icon {
-  height: $md-chip-height;
-  line-height: $md-chip-height;
-}
-
-.md-chip-icon {
-  display: block;
-  float: left;
-  background: #009587;
-  width: $md-chip-height;
-  border-radius: 50%;
-  text-align: center;
-  color: white;
-  margin: 0 8px 0 -12px;
 }
 
 .md-chip-remove {
@@ -119,15 +170,19 @@ $md-chip-color: #e0e0e0;
   } 
 }
 
-.md-chip-raised {
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-}
-
 .div-signup {
     margin-top: 80px;
+    h2 {
+        color:#999;
+    }
+    .p-id, .p-password, .p-ingredient {
+        font-size: 70%;
+        margin: 0px;
+        color: red;
+    }
 }
 .input-signup {
-    width: 40%;
+    width: 80%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -136,11 +191,11 @@ $md-chip-color: #e0e0e0;
     box-sizing: border-box;
 }
 .btn-signup {
-    width: 19.5%;
-    background-color: green;
+    width: 80%;
+    background-color: #FF92B1;
     color: white;
     padding: 14px 20px;
-    margin: 8px 8px;
+    margin: 2%;
     border: none;
     border-radius: 4px;
     cursor: pointer;
