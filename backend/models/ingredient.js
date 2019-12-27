@@ -5,4 +5,4 @@ const ingredientSchema = new mongoose.Schema({
   picture: { type: String, required: true }
 });
 
-module.exports = mongoose.model("Ingedient", ingredientSchema);
+module.exports = mongoose.model("Ingredient", ingredientSchema);
