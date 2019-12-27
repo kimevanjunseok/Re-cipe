@@ -39,7 +39,6 @@
   npm run serve
   ```
 
-  
 
 ## 4. Function
 
@@ -54,11 +53,7 @@
    * 재료 기반 레시피 추천으로 미리 사용자가 냉장고 속에 있는 재료를 선택하여 이를 바탕으로 레시피 추천을 받을 수 있도록 한다.
    * Password 저장시 `crypto` 모듈을 사용하여 암호화 한다.
 
-   <img width="392" alt="회원가입" src="https://user-images.githubusercontent.com/45961217/71456216-c387cf00-27db-11ea-8021-30ce9f1fc67d.png">
-
-   <img width="392" alt="회원가입2" src="https://user-images.githubusercontent.com/45961217/71456312-3002ce00-27dc-11ea-8073-319ff047021c.png">
-
-   
+   <img width="600" alt="캡처" src="https://user-images.githubusercontent.com/45934117/71507187-f22ea400-28c6-11ea-978a-e54612d3a37b.PNG">
 
 2. **로그인**
 
@@ -68,16 +63,13 @@
 
    <img width="392" alt="로그인" src="https://user-images.githubusercontent.com/45961217/71456461-d353e300-27dc-11ea-91a4-757ef268efb7.png">
 
-   
-
 3. **로그아웃**
 
    * 로그아웃 시, `localStorage`에 있는 사용자의 정보는 모두 삭제된다.
    * 후에 접속한다면 다시 로그인을 해야한다.
 
-   <img width="392" alt="로그아웃" src="https://user-images.githubusercontent.com/45961217/71456793-896bfc80-27de-11ea-8ce7-34a2c4528394.png">
+   <img width="392" alt="캡처" src="https://user-images.githubusercontent.com/45934117/71507247-3752d600-28c7-11ea-8929-457e263ab6a3.PNG">
 
-   
 
 ### 2) 재료 검색
 
